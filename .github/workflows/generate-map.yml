@@ -1,0 +1,36 @@
+name: Generate weather map raster
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run generate
+        env:
+          KTTV_API_BASE_URL: ${{ secrets.KTTV_API_BASE_URL }}
+          KTTV_API_CLIENT_ID: ${{ secrets.KTTV_API_CLIENT_ID }}
+          KTTV_API_SECRET_KEY: ${{ secrets.KTTV_API_SECRET_KEY }}
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          publish_branch: gh-pages
+          keep_files: false

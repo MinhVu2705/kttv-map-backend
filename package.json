@@ -1,0 +1,22 @@
+{
+  "name": "kttv-map-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fetch du lieu diem tu KTTV API, noi suy IDW, raster hoa ra PNG cho lop ban do nhiet do/mua cua app Thoi tiet Viet Nam.",
+  "type": "module",
+  "scripts": {
+    "generate": "tsx src/generate.ts"
+  },
+  "dependencies": {
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/pngjs": "^6.0.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}
