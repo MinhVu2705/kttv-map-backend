@@ -38,6 +38,8 @@ async function mapWithConcurrency<T, R>(
   return results;
 }
 
+let loggedErrors = 0;
+
 async function fetchSamples(): Promise<WeatherSample[]> {
   const grid = generateGrid(SOURCE_GRID_ROWS, SOURCE_GRID_COLS);
   return mapWithConcurrency(grid, FETCH_CONCURRENCY, async (point) => {
@@ -46,7 +48,13 @@ async function fetchSamples(): Promise<WeatherSample[]> {
       const temp = Number.isFinite(data?.t2m) ? Math.round(data!.t2m as number) : null;
       const rain = Number.isFinite(data?.rain) ? Number(data!.rain) : null;
       return { ...point, temp, rain };
-    } catch {
+    } catch (err) {
+      // Chi log vai loi dau tien de khong ngap log khi tat ca deu that bai
+      // (vd bi chan IP / rate limit) - du de chan doan ma khong spam.
+      if (loggedErrors < 5) {
+        loggedErrors++;
+        console.error(`[fetchSamples] point (${point.lat},${point.lon}) failed:`, err);
+      }
       return { ...point, temp: null, rain: null };
     }
   });

@@ -28,16 +28,29 @@ export async function getCurrentData(lat: number, lon: number): Promise<CurrentD
   const path = `/api/mobile_app_data/get_data_realtime/${lat}/${lon}`;
   const { signature, timestamp } = sign("GET", path);
 
-  const res = await fetch(`${BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      "X-Api-Key": CLIENT_ID,
-      "X-Signature": signature,
-      "X-Timestamp": timestamp,
-    },
-  });
+  // Timeout ngan de that bai nhanh, khong treo ca workflow neu bi chan/rot
+  // request (thay vi cho fetch() treo vo thoi han).
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-  if (!res.ok) return null;
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": CLIENT_ID,
+        "X-Signature": signature,
+        "X-Timestamp": timestamp,
+      },
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status} ${res.statusText}`);
+  }
   const json = (await res.json()) as { data?: CurrentDataPoint[] };
   return json?.data?.[0] ?? null;
 }
