@@ -5,9 +5,11 @@
 
 import { createHmac } from "node:crypto";
 
-const API_SECRET_KEY = process.env.KTTV_API_SECRET_KEY ?? "KTTV_MOBILE_SECRET_KEY";
-const CLIENT_ID = process.env.KTTV_API_CLIENT_ID ?? "KTTV_MOBILE_CLIENT_ID";
-const BASE_URL = process.env.KTTV_API_BASE_URL ?? "https://m.thoitietnguyhiem.gov.vn";
+// Dung "||" chu khong phai "??" - GitHub Actions truyen secret chua khai bao
+// thanh chuoi rong "" (khong phai undefined), "??" se khong fallback duoc.
+const API_SECRET_KEY = process.env.KTTV_API_SECRET_KEY || "KTTV_MOBILE_SECRET_KEY";
+const CLIENT_ID = process.env.KTTV_API_CLIENT_ID || "KTTV_MOBILE_CLIENT_ID";
+const BASE_URL = process.env.KTTV_API_BASE_URL || "https://m.thoitietnguyhiem.gov.vn";
 
 function sign(method: string, path: string, body = ""): { signature: string; timestamp: string } {
   const timestamp = Math.floor(Date.now() / 1000).toString();
