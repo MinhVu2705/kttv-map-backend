@@ -16,8 +16,9 @@ const SOURCE_GRID_COLS = 11;
 const FETCH_CONCURRENCY = 8;
 
 // Kich thuoc anh raster dau ra - ti le khop VIETNAM_BOUNDS (~2.03 cao/rong).
-const OUTPUT_WIDTH = 220;
-const OUTPUT_HEIGHT = 446;
+// Tang tu 220x446 de do min hon khi xem full-screen (WeatherMapScreen.tsx).
+const OUTPUT_WIDTH = 360;
+const OUTPUT_HEIGHT = 730;
 
 const OUTPUT_DIR = new URL("../output/", import.meta.url);
 
