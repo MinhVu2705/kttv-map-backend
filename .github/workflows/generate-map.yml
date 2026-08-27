@@ -1,8 +1,11 @@
 name: Generate weather map raster
 
+# [TAT] KTTV chan het IP ngoai Viet Nam nen runner cua GitHub Actions khong
+# bao gio goi duoc API - viec sinh ban do da chuyen sang chay dinh ky tren
+# may local (Task Scheduler "KttvMapGenerate", xem scripts/publish.ps1), roi
+# push thang len branh gh-pages. Giu lai workflow_dispatch de test thu cong
+# khi can (se van fail tru khi chay tren self-hosted runner o Viet Nam).
 on:
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch: {}
 
 permissions:
