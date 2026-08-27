@@ -75,6 +75,13 @@ async function main() {
   const tempPng = rasterizeToPNG(samples, { width: OUTPUT_WIDTH, height: OUTPUT_HEIGHT, field: "temp" });
   const rainPng = rasterizeToPNG(samples, { width: OUTPUT_WIDTH, height: OUTPUT_HEIGHT, field: "rain" });
 
+  const temps = samples.map((s) => s.temp).filter((t): t is number => t !== null);
+  const rains = samples
+    .map((s) => s.rain)
+    .filter((r): r is number => r !== null && r >= 0.1);
+  const tempRange = temps.length ? { min: Math.min(...temps), max: Math.max(...temps) } : null;
+  const rainRange = rains.length ? { min: Math.min(...rains), max: Math.max(...rains) } : null;
+
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(new URL("temp.png", OUTPUT_DIR), tempPng);
   await writeFile(new URL("rain.png", OUTPUT_DIR), rainPng);
@@ -89,6 +96,8 @@ async function main() {
         sourcePoints: samples.length,
         validTempPoints: validTemp,
         validRainPoints: validRain,
+        tempRange,
+        rainRange,
       },
       null,
       2
