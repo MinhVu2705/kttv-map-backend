@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T03:13:14.959Z",
+  "generatedAt": "2026-08-28T03:28:19.704Z",
   "bounds": {
     "minLat": 8.4,
     "maxLat": 23.4,
@@ -12,7 +12,7 @@
   "validTempPoints": 187,
   "validRainPoints": 187,
   "tempRange": {
-    "min": 22,
+    "min": 21,
     "max": 37
   },
   "rainRange": null
