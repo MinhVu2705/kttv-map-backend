@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T09:58:15.104Z",
+  "generatedAt": "2026-09-03T02:43:15.594Z",
   "bounds": {
     "minLat": 8.4,
     "maxLat": 23.4,
@@ -9,11 +9,11 @@
   "width": 360,
   "height": 730,
   "sourcePoints": 198,
-  "validTempPoints": 184,
-  "validRainPoints": 184,
+  "validTempPoints": 187,
+  "validRainPoints": 187,
   "tempRange": {
     "min": 21,
-    "max": 36
+    "max": 37
   },
   "rainRange": null
 }
